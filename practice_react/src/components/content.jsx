@@ -5,7 +5,15 @@ export default function Content() {
 
     const [searchResults, add] = useState([])
     const [hasData, set] = useState(false);
-    const [error, setError] = useState(false);
+    const [message, showMessage] = useState(false);
+
+    const displayMessage = () => {
+        if(message === false) {
+            showMessage(true);
+        } else {
+            showMessage(false);
+        }
+    }
 
     function search() {
 
@@ -17,11 +25,12 @@ export default function Content() {
             .then((response) => {
                 console.log(response.data);
                 if(response.data != null) {
-                    add((items) => [...items, searchResults]);
+                    for(let i = 0; i < response.data.length; i++) {
+                        add((items) => [...items, response.data[i]]);
+                    }
                     set(true)
                 } else {
                     set(false)
-                    setError(true)
                 }
             }).catch((err) => {
                 console.log(err);
@@ -59,17 +68,18 @@ export default function Content() {
                         {
                             hasData ? 
                             searchResults.map((items) => (
-                                <div>
-                                    <h2 key={items.index}>{items}</h2>
+                                <div className="border rounded-2 p-3 m-2">
+                                    <p className="fs-4">{items.joke}</p>
+                                    { message && <span>{items.answer}</span>}
+                                    <div className="d-flex justify-content-md-end">
+                                        <button key={items.index} type="button" onClick={displayMessage}>Show</button>
+                                    </div>
                                 </div>
                             ))
-                            : error ? 
-                            <div>
-                                <h2>Results Not Found</h2>
-                            </div>
-                            :
-                            <div>
-                            </div>
+                            : 
+                                <div>
+                                    <h2>Results Not Found</h2>
+                                </div>
 
                         }
                     </div>

@@ -15,7 +15,9 @@ export default function List() {
                 axios.get("http://localhost:4321/getList")
                 .then(res => {
                     console.log(res.data.backendDatabase)
-                    add((items) => [...items, res.data.backendDatabase])
+                    for(let i = 0; i < res.data.backendDatabase.length; i++) {
+                        add((items) => [...items, res.data.backendDatabase[i]]);
+                    }
                     set(true)
                 }).catch(err => {
                     console.log(err)
@@ -45,7 +47,7 @@ export default function List() {
                                     </div>
                                 </li>
                             )) :
-                            <l1></l1>
+                            <li></li>
                     }            
                 </ol>
             </div>
