@@ -6,7 +6,7 @@ const PORT = 4321;
 app.use(express.json());
 app.use(cors());
 
-const backendDatabase = [
+let backendDatabase = [
     {
         "index" : 0,
         "joke" : 'what did the horse say after it tripped?',
@@ -21,8 +21,7 @@ const backendDatabase = [
         "index" : 2,
         "joke" : 'what do you call a well-balanced horse?',
         "answer" : 'a stable'
-    },
-
+    }
 ];
 
 app.get('/', (req, res) => {
@@ -38,9 +37,28 @@ app.get('/getList', (req, res) => {
 app.post('/addToList', (req, res) => {
 
     const data = req.body;
+
+    let length = backendDatabase.length
+
+    if(data !== null) {
+        const sending = {
+            'index': length++,
+            'joke': data.joke,
+            'answer': data.answer
+        }
+        backendDatabase.push(sending);
+    }
+
+    res.status(200).json({'results' : 'successful'})
+})
+
+app.post('/addToList/:index', (req, res) => {
+
+    const data = req.body;
     console.log(data);
 
-    res.status(200).send({'results' : 'successful'})
+    res.status(200).json({'results' : 'successful'});
+
 })
 
 app.delete('/deleteFromList', (req, res) => {

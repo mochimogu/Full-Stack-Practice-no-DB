@@ -1,18 +1,23 @@
 import axios from "axios";
 import Navigation from "./navbar";
+import { useEffect, useState } from "react";
 
 
 
 
 export default function Edit() {
 
+    const [joke, setJoke] = useState("");
+    const [answer, setAnswer] = useState("");
 
     function sendData() {
 
         try {
 
-            const joke = document.getElementById('joke').value;
-            const answer = document.getElementById('answer').value;
+            // const joke = document.getElementById('joke').value;
+            // const answer = document.getElementById('answer').value;
+            console.log(joke);
+            console.log(answer);
 
             const sending = {
                 'joke' : joke,
@@ -33,7 +38,6 @@ export default function Edit() {
 
     }
 
-
     return (
         <div>
             <Navigation/>
@@ -45,12 +49,14 @@ export default function Edit() {
                             <input id="joke" className="rounded-1 w-100"
                                 type="text"
                                 placeholder="Enter Joke Here"
+                                onChange={(e) => setJoke(e.target.value)}
                             />
                         </div>
                         <div className="input-group mt-4 mb-4">
                             <input id="answer" className="rounded-1 w-100"
                                 type="text"
                                 placeholder="Enter Answer Here"
+                                onChange={(e) => setAnswer(e.target.value)}
                             />
                         </div>
                         <div className="d-grid gap-2 d-md-flex justify-content-md-end">

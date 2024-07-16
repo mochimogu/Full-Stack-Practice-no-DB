@@ -29,7 +29,6 @@ export default function List() {
 
         fetchData();
     }, []);
-
     
     return (
         <div>
